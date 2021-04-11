@@ -12,7 +12,6 @@ public class ConsoleApp {
         InputHandler inputHandler = new InputHandler(new Scanner(System.in));
         OutputHandler outputHandler = new OutputHandler(rpnCalculator.getProcessingStack());
         try {
-
             while(inputHandler.hasNextInput()) {
                 String[] input = inputHandler.handleUserInput();
                 rpnCalculator.evaluate(input);

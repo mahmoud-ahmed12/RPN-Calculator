@@ -10,8 +10,9 @@ public class ConsoleApp {
         Calculator rpnCalculator = new Calculator();
         rpnCalculator.initCalculator();
         InputHandler inputHandler = new InputHandler(new Scanner(System.in));
-        OutputHandler outputHandler = new OutputHandler(rpnCalculator.getProcessingStack());
+        OutputHandler outputHandler = new OutputHandler(rpnCalculator.getProcessingStack(), System.out);
         try {
+            outputHandler.displayMessage("Please enter RPN expression space separated");
             while(inputHandler.hasNextInput()) {
                 String[] input = inputHandler.handleUserInput();
                 rpnCalculator.evaluate(input);

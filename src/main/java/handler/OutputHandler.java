@@ -2,24 +2,26 @@ package handler;
 
 import lombok.AllArgsConstructor;
 
+import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.util.Stack;
 
 @AllArgsConstructor
 public class OutputHandler {
     Stack<Double> resultStack;
+    PrintStream outStream;
 
     public void displayStack() {
         DecimalFormat fmt = new DecimalFormat("0.##########");
-        System.out.print("stack: ");
+        outStream.print("stack: ");
         resultStack.forEach(value -> {
-            System.out.print(fmt.format(value));
-            System.out.print(" ");
+            outStream.print(fmt.format(value));
+            outStream.print(" ");
         });
-        System.out.println();
+        outStream.println();
     }
 
     public void displayMessage(String message) {
-        System.out.println(message);
+        outStream.println(message);
     }
 }

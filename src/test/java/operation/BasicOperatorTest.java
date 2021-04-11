@@ -10,7 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Collections;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BasicOperatorTest extends OperationTest {
+public class BasicOperatorTest extends OperatorTest {
 
     @Before
     public void init() {

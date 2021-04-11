@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -13,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UndoTest extends OperationTest {
+public class UndoTest extends OperatorTest {
 
     @Before
     public void init() {

@@ -6,18 +6,18 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DivideTest extends OperationTest {
+public class DivideTest extends ArithmeticOperatorTest {
     @Before
     public void init() {
         underTest = new Divide(processingStack, history);
     }
     @Test
     public void canDivideTwoNumbers() {
-        canOperateOnTwoNumbers(2D, 3D, 3D/2D);
+        assertOperateOnTwoNumbers(2D, 3D, 1.5);
     }
 
     @Test
     public void canValidateEnoughOperand() {
-        canValidateEnoughOperand(2);
+        assertEnoughOperandValidation(2);
     }
 }

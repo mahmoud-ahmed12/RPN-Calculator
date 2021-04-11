@@ -36,7 +36,6 @@ public void initCalculator() {
                 operator = registryMap.get("default");
                 try {
                     Double number = Double.parseDouble(token);
-                    //TODO: think of another way to do it, maybe all operations takes token?
                     ((BasicOperator)operator).setNumber(number);
                 } catch (NumberFormatException e) {
                     String message = String.format("Not recognized input %s (position: %d)", token, cursor);

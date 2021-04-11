@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ClearTest extends OperationTest {
+public class ClearTest extends OperatorTest {
 
     @Before
     public void init() {

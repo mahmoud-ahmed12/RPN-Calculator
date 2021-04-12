@@ -37,7 +37,7 @@ public class Calculator {
             if(operator == null) {
                 try {
                     Double number = Double.parseDouble(token);
-                    operator = OperatorFactory.getBasicOperatorInstance(number);
+                    operator = OperatorFactory.getPushOperatorInstance(number);
                 } catch (NumberFormatException e) {
                     String message = String.format("Not recognized input %s (position: %d)", token, cursor);
                     throw new InvalidInputException(message);

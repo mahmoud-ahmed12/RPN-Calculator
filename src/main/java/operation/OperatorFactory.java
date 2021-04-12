@@ -21,7 +21,7 @@ public class OperatorFactory {
     private static Sqrt sqrtOperator;
     private static Undo undoOperator;
     private static Clear clearOperator;
-    private static BasicOperator basicOperator;
+    private static Push pushOperator;
 
     public synchronized static Add getAddInstance() {
         if(addOperator == null) {
@@ -72,12 +72,12 @@ public class OperatorFactory {
         return clearOperator;
     }
 
-    public synchronized static Operator getBasicOperatorInstance(Double number) {
-        if(basicOperator == null) {
-            basicOperator = new BasicOperator(processingStack, history);
+    public synchronized static Push getPushOperatorInstance(Double number) {
+        if(pushOperator == null) {
+            pushOperator = new Push(processingStack, history);
         }
-        basicOperator.setNumber(number);
-        return basicOperator;
+        pushOperator.setNumber(number);
+        return pushOperator;
     }
 
 }

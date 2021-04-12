@@ -12,31 +12,32 @@ public class Calculator {
     private Stack<List<Double>> history;
     private Map<String, Operator> registryMap;
 
-public void initCalculator() {
-    registryMap.putIfAbsent("+", new Add(processingStack, history));
-    registryMap.putIfAbsent("-", new Subtract(processingStack, history));
-    registryMap.putIfAbsent("*", new Multiply(processingStack, history));
-    registryMap.putIfAbsent("/", new Divide(processingStack, history));
-    registryMap.putIfAbsent("sqrt", new Sqrt(processingStack, history));
-    registryMap.putIfAbsent("clear", new Clear(processingStack, history));
-    registryMap.putIfAbsent("undo", new Undo(processingStack, history));
-    registryMap.putIfAbsent("default", new BasicOperator(processingStack, history));
-}
-
     public Calculator() {
         processingStack = new Stack<>();
         history = new Stack<>();
         registryMap = new HashMap<>();
+        OperatorFactory.setHistory(history);
+        OperatorFactory.setProcessingStack(processingStack);
     }
+
+    public void initCalculator() {
+        registryMap.putIfAbsent("+", OperatorFactory.getAddInstance());
+        registryMap.putIfAbsent("-", OperatorFactory.getSubtractInstance());
+        registryMap.putIfAbsent("*", OperatorFactory.getMultiplyInstance());
+        registryMap.putIfAbsent("/", OperatorFactory.getDivideInstance());
+        registryMap.putIfAbsent("sqrt", OperatorFactory.getSqrtInstance());
+        registryMap.putIfAbsent("clear", OperatorFactory.getClearInstance());
+        registryMap.putIfAbsent("undo", OperatorFactory.getUndoInstance());
+    }
+
     public void evaluate(String[] input) throws Exception{
         int cursor = 1;
         for (String token : input) {
             Operator operator = registryMap.get(token);
             if(operator == null) {
-                operator = registryMap.get("default");
                 try {
                     Double number = Double.parseDouble(token);
-                    ((BasicOperator)operator).setNumber(number);
+                    operator = OperatorFactory.getBasicOperatorInstance(number);
                 } catch (NumberFormatException e) {
                     String message = String.format("Not recognized input %s (position: %d)", token, cursor);
                     throw new InvalidInputException(message);
@@ -49,7 +50,4 @@ public void initCalculator() {
             cursor += token.length() + 1;
         };
     }
-
-
-
 }

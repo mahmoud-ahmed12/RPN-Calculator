@@ -2,53 +2,119 @@ import exception.InsufficientParameterException;
 import exception.InvalidInputException;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CalculatorTest {
 
-    Calculator underTest;
+    static Calculator underTest = new Calculator();
 
     @Before
     public void init() {
-        underTest = new Calculator();
         underTest.initCalculator();
     }
 
     @Test
-    public void canAddTwoNumbers() throws Exception {
+    public void t1_canAddTwoNumbers() throws Exception {
+        // Given
         String[] input = {"1", "2", "+"};
-        assertEvaluate(input, 3D);
+
+        // When
+        underTest.evaluate(input);
+
+        // Then
+        Assert.assertEquals(3, underTest.getProcessingStack().peek(), 0);
     }
 
     @Test
-    public void canSubtractTwoNumbers() throws Exception {
+    public void t2_canSubtractTwoNumbers() throws Exception {
+        // Given
         String[] input = {"1", "2", "-"};
-        assertEvaluate(input, -1D);
+
+        // When
+        underTest.evaluate(input);
+
+        // Then
+        Assert.assertEquals(-1, underTest.getProcessingStack().peek(), 0);
     }
 
     @Test
-    public void canMultiplyTwoNumbers() throws Exception {
+    public void t3_canMultiplyTwoNumbers() throws Exception {
+        // Given
         String[] input = {"2", "3", "*"};
-        assertEvaluate(input, 6D);
+
+        // When
+        underTest.evaluate(input);
+
+        // Then
+        Assert.assertEquals(6, underTest.getProcessingStack().peek(), 0);
     }
 
     @Test
-    public void canDivideTwoNumbers() throws Exception {
+    public void t4_canDivideTwoNumbers() throws Exception {
+        // Given
         String[] input = {"3", "2", "/"};
-        assertEvaluate(input, 1.5);
+
+        // When
+        underTest.evaluate(input);
+
+        // Then
+        Assert.assertEquals(1.5, underTest.getProcessingStack().peek(), 0);
     }
 
     @Test
-    public void canSqrtNumber() throws Exception {
+    public void t5_canSqrtNumber() throws Exception {
+        // Given
         String[] input = {"3", "sqrt"};
-        assertEvaluate(input, Math.sqrt(3));
+
+        // When
+        underTest.evaluate(input);
+
+        // Then
+        Assert.assertEquals(Math.sqrt(3), underTest.getProcessingStack().peek(), 0);
     }
 
     @Test
-    public void canValidateOperator() throws Exception {
+    public void t6_canUndoLastOperation() throws Exception {
+        // Given
+        String[] input = {"undo"};
+        Assert.assertEquals(5, underTest.getProcessingStack().size());
+        Assert.assertEquals(Math.sqrt(3), underTest.getProcessingStack().peek(), 0);
+
+        // When
+        underTest.evaluate(input);
+
+        // Then
+        Assert.assertEquals(5, underTest.getProcessingStack().size());
+        Assert.assertEquals(3, underTest.getProcessingStack().peek(), 0);
+    }
+
+    @Test
+    public void t7_canClearCalculator() throws Exception{
+        // Given
+        String[] input = {"clear"};
+        Assert.assertEquals(5, underTest.getProcessingStack().size());
+
+        // When
+        underTest.evaluate(input);
+
+        // Then
+        Assert.assertEquals(0, underTest.getProcessingStack().size());
+    }
+
+    @Test
+    public void t7_canValidateOperator() throws Exception {
+        // Given
         String[] input = {"1", "*", "2", "3" };
+        Assert.assertEquals(0, underTest.getProcessingStack().size());
+
         try {
+            // When
             underTest.evaluate(input);
+
+        // Then
         } catch (Exception e) {
             Assert.assertEquals(e.getClass(), InsufficientParameterException.class);
             Assert.assertEquals("Operator * (position: 3): insufficient parameters", e.getMessage());
@@ -57,19 +123,20 @@ public class CalculatorTest {
     }
 
     @Test
-    public void canValidateInput() {
+    public void t8_canValidateInput() {
+        // Given
         String[] input = {"1", "3", "#", "3" };
+        Assert.assertEquals(1, underTest.getProcessingStack().size());
+
         try {
+            // When
             underTest.evaluate(input);
+
+        // Then
         } catch (Exception e) {
             Assert.assertEquals(e.getClass(), InvalidInputException.class);
             Assert.assertEquals("Not recognized input # (position: 5)", e.getMessage());
         }
-        Assert.assertEquals(2, underTest.getProcessingStack().size());
-    }
-
-    private void assertEvaluate(String[] input, double expected) throws Exception {
-        underTest.evaluate(input);
-        Assert.assertEquals(expected, underTest.getProcessingStack().peek(), 0D);
+        Assert.assertEquals(3, underTest.getProcessingStack().size());
     }
 }
